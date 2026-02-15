@@ -1,0 +1,5 @@
+{
+  "name": "CryptoGuard Web",
+  "description": "A modern web application to securely encrypt and decrypt messages using a secret key. It features a password generator and easy-to-use clipboard and sharing functions, built with React and Tailwind CSS.",
+  "requestFramePermissions": []
+}
