@@ -96,7 +96,7 @@ export async function decryptText(encryptedText: string, password: string): Prom
     return dec.decode(decryptedContent);
   } catch (error) {
     console.error('Decryption failed:', error);
-    throw new Error('Decryption failed. Invalid secret key or corrupted data.');
+    throw new Error('Falha na descriptografia. Chave secreta inválida ou dados corrompidos.');
   }
 }
 

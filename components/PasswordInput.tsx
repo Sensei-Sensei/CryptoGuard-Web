@@ -30,14 +30,14 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({ value, onChange })
         type={showPassword ? 'text' : 'password'}
         value={value}
         onChange={onChange}
-        placeholder="Secret Key"
+        placeholder="Chave Secreta"
         className="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition pr-10"
       />
       <button
         type="button"
         onClick={() => setShowPassword(!showPassword)}
         className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
-        aria-label={showPassword ? 'Hide password' : 'Show password'}
+        aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
       >
         {showPassword ? <EyeOffIcon className="h-6 w-6" /> : <EyeIcon className="h-6 w-6" />}
       </button>
