@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PasswordInput } from './components/PasswordInput';
 import { IconButton } from './components/IconButton';
 import { encryptText, decryptText, generatePassword } from './services/cryptoService';
@@ -11,6 +11,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [toast, setToast] = useState('');
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (toast) {
@@ -18,6 +19,14 @@ const App: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [toast]);
+
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = 'auto'; // Reset height to recalculate
+      const scrollHeight = textAreaRef.current.scrollHeight;
+      textAreaRef.current.style.height = `${scrollHeight}px`;
+    }
+  }, [message]);
 
   const handleAction = async (action: 'encrypt' | 'decrypt') => {
     if (!message || !password) {
@@ -33,7 +42,7 @@ const App: React.FC = () => {
           ? await encryptText(message, password)
           : await decryptText(message, password);
       setResult(output);
-      setMessage(output);
+      setMessage(''); // Clear message after action
     } catch (e: any) {
       setError(e.message || 'Ocorreu um erro desconhecido.');
     } finally {
@@ -66,7 +75,7 @@ const App: React.FC = () => {
       }).catch((err) => setError('O compartilhamento falhou ou foi cancelado.'));
     } else {
         handleCopy();
-        setError('API de compartilhamento não suportada. Copiado para a área de transferência.');
+        setToast('API de compartilhamento não suportada. Copiado para a área de transferência.');
     }
   };
 
@@ -89,18 +98,20 @@ const App: React.FC = () => {
       <div className="w-full max-w-2xl mx-auto bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 space-y-6 border border-gray-700">
         <header className="text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
-            CryptoGuard Web
+            CryptoGuard
           </h1>
           <p className="text-gray-400 mt-2">Proteja e revele suas mensagens com segurança.</p>
         </header>
 
         <div className="space-y-4">
           <textarea
+            ref={textAreaRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Digite sua mensagem aqui..."
-            className="w-full h-32 bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+            className="w-full min-h-[8rem] bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none overflow-y-hidden"
             aria-label="Mensagem para criptografar ou descriptografar"
+            rows={1}
           />
           <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>

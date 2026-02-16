@@ -1,5 +1,5 @@
 {
-  "name": "CryptoGuard Web",
-  "description": "Um aplicativo web moderno para criptografar e descriptografar mensagens com segurança usando uma chave secreta. Possui um gerador de senhas e funções fáceis de usar para área de transferência e compartilhamento, construído com React e Tailwind CSS.",
+  "name": "CryptoGuard",
+  "description": "Um aplicativo moderno para criptografar e descriptografar mensagens com segurança usando uma chave secreta. Possui um gerador de senhas e funções fáceis de usar para área de transferência e compartilhamento, construído com React e Tailwind CSS.",
   "requestFramePermissions": []
 }
